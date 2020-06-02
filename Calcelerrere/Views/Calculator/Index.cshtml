@@ -1,37 +1,79 @@
 ﻿
 @{
-    ViewBag.Title = "Calculator";
+    ViewBag.Title = "Index";
 }
 @model Calcelerrere.Models.Calculate
 <html>
 <head>
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.0.js"></script>
+    <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jquery.jqGrid.min.js"></script>
+</head>
+
     <body>
         <div align="center">
             @using (Html.BeginForm("Index", "Calculator", FormMethod.Post))
             {<h2>Credit Calc</h2>
                 <div class="form-group">
-                    <label for="no1">No1</label>
+                    <label for="no1">Сумма кредита</label>
                     <input type="text" class="form-control" id="no1" name="FN" value="@Model.summ" />
                 </div>
                 <div class="form-group">
-                    <label for="no2">No2</label>
+                    <label for="no2">Срок кредита</label>
                     <input type="text" class="form-control" id="no2" name="SN" value="@Model.time" />
                 </div>
                 <div class="form-group">
-                    <label for="no3">No3</label>
-                    <input type="text" class="form-control" id="no3" name="no3" value="@Model.percent" />
+                    <label for="no3">Ставка в год</label>
+                    <input type="text" class="form-control" id="no3" name="TN" value="@Model.percent" />
                 </div>
                 <div class="form-group">
-                    <label for="total">total</label>
+                    <label for="total">Сумма ежемесячного платежа</label>
                     <input type="text" class="form-control" id="total" name="total" value="@Model.result" />
                 </div>
+                <button type="submit" class="btn vtn-prime" id="add" value="add" name="calculate">Calculate</button>
 
-                <button type="submit" class="btn vtn-prime" id="add" value="add" name="calculate">+</button>
-                <button type="submit" class="btn vtn-prime" id="sub" value="sub" name="calculate">-</button>
-                <button type="submit" class="btn vtn-prime" id="mul" value="mul" name="calculate">*</button>
-                <button type="submit" class="btn vtn-prime" id="div" value="div" name="calculate">/</button>
+                <table id="Demogrid"></table>
+                <script>
+                    $(function () {
+                        debugger;
+                        $("#Demogrid").jqGrid
+                            ({
+                                url: "/Calculator/GetTable",
+                                datatype: 'json',
+                                mtype: 'Get',
+                                //table header name
+                                colNames: ['CustomerID', 'CompanyName', 'ContactName',
+                                    'ContactTitle', 'City'],
+                                //colModel takes the data from controller and binds to grid
+                                colModel: [
+                                    { name: "id" },
+                                    { name: "date" },
+                                    { name: "AmountBody" },
+                                    { name: "AmountPercent" },
+                                    { name: Remain" },
+                                   
+                                ],
+                                height: '100%',
+                                rowNum: 10,
+                                viewrecords: true,
+                                caption: 'JQgrid DEMO',
+                                emptyrecords: 'No records',
+                                jsonReader:
+                                {
+                                    root: "rows",
+                                   
+                                    repeatitems: false,
+                                    Id: "0"
+                                },
+                                autowidth: true,
+                            });
+                    });
+                </script>
+
             }
         </div>
     </body>
-</head>
 </html>

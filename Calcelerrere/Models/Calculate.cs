@@ -11,8 +11,8 @@ namespace Calcelerrere.Models
 
         public int time { get; set; }
 
-        public int percent { get; set; }
+        public double percent { get; set; }
 
-        public int result { get; set; }
+        public double result { get; set; }
     }
 }
